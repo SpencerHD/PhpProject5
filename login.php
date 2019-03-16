@@ -25,7 +25,7 @@ if($_POST) {
     // grab data from customer database
     $pdo = Database::connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT * FROM customer WHERE email = '$username' AND passwordhash = '$password' LIMIT 1";
+    $sql = "SELECT * FROM customer WHERE email = '$username' AND password = '$password' LIMIT 1";
     $q = $pdo->prepare($sql);
     $q->execute(array());
     $data = $q->fetch(PDO::FETCH_ASSOC);

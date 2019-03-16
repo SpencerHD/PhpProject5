@@ -15,13 +15,13 @@
 		$nameError = null;
 		$emailError = null;
 		$mobileError = null;
-                $passwordhashError = null;
+                $passwordError = null;
 		
 		// keep track post values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
-                $passwordhash = $_POST['passwordhash'];
+                $password = $_POST['password'];
 		
 		// validate input
 		$valid = true;
@@ -44,8 +44,8 @@
 			$valid = false;
 		}
                 
-                if (empty($passwordhash)) {
-			$passwordhashError = 'Please enter Password';
+                if (empty($password)) {
+			$passwordError = 'Please enter Password';
 			$valid = false;
 		}
 		
@@ -53,9 +53,9 @@
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "INSERT INTO customer (name,email,mobile,passwordhash) values(?, ?, ?, ?)";
+			$sql = "INSERT INTO customer (name,email,mobile,password) values(?, ?, ?, ?)";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$passwordhash));
+			$q->execute(array($name,$email,$mobile,$password));
 			Database::disconnect();
 			header("Location: login.php");
 		}
@@ -76,7 +76,7 @@
     
     			<div class="span10 offset1">
     				<div class="row">
-		    			<h3>Create a Customer</h3>
+		    			<h3>Join a Customer</h3>
 		    		</div>
     		
 	    			<form class="form-horizontal" action="create2.php" method="post">
@@ -107,12 +107,12 @@
 					      	<?php endif;?>
 					    </div>
 					  </div>
-                                          <div class="control-group <?php echo !empty($passwordhashError)?'error':'';?>">
+                                          <div class="control-group <?php echo !empty($passwordError)?'error':'';?>">
 					    <label class="control-label">Password</label>
 					    <div class="controls">
-					      	<input name="passwordhash" type="text"  placeholder="Password" value="<?php echo !empty($passwordhash)?$passwordhash:'';?>">
-					      	<?php if (!empty($passwordhashError)): ?>
-					      		<span class="help-inline"><?php echo $passwordhashError;?></span>
+					      	<input name="password" type="text"  placeholder="Password" value="<?php echo !empty($password)?$password:'';?>">
+					      	<?php if (!empty($passwordError)): ?>
+					      		<span class="help-inline"><?php echo $passwordError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
